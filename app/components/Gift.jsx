@@ -27,8 +27,26 @@ const Gift = ({ gifts, setGifts, gift, setCurrentGift, setEditing }) => {
         </div>
       </div>
       <div className="flex items-center gap-2">
-        <BiEdit className="cursor-pointer text-lg" onClick={handleEdit} />
-        <BsTrash onClick={handleDelete} className="cursor-pointer" />
+        <BiEdit
+          className="cursor-pointer text-lg"
+          onClick={handleEdit}
+          tabindex="0"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleEdit();
+            }
+          }}
+        />
+        <BsTrash
+          onClick={handleDelete}
+          className="cursor-pointer"
+          tabindex="0"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              handleDelete();
+            }
+          }}
+        />
       </div>
     </li>
   );

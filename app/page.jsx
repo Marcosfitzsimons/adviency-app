@@ -45,6 +45,7 @@ export default function Home() {
         <h1 className="font-great-vibes text-5xl">List of Gifts</h1>
         <button
           onClick={() => setShowGiftForm((prevValue) => !prevValue)}
+          type="button"
           className="bg-purple-200 rounded-lg font-mono p-1 text-black"
         >
           Add new Gift
@@ -78,7 +79,7 @@ export default function Home() {
               />
             ))
           ) : (
-            <p className="">You have no pending gifts.</p>
+            <p className="text-center">You have no pending gifts.</p>
           )}
         </ul>
         <button onClick={() => setGifts([])} className="text-red-600 font-mono">

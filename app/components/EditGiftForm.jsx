@@ -1,6 +1,5 @@
 "use client";
 import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from "uuid";
 
 const EditGiftForm = ({ currentGift, gifts, setGifts, setEditing }) => {
   const [giftInput, setGiftInput] = useState(currentGift.text);
