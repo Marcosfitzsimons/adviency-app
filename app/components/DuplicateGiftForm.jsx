@@ -1,15 +1,20 @@
 "use client";
 import { useForm } from "react-hook-form";
+import { v4 as uuidv4 } from "uuid";
+import { BsDice5 } from "react-icons/bs";
 
-const EditGiftForm = ({ gifts, setGifts, currentGift, setIsEditing }) => {
+const DuplicateGiftForm = ({
+  gifts,
+  setGifts,
+  setShowDuplicate,
+  currentGift,
+}) => {
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
     setValue,
-    getValues,
-    setError,
   } = useForm({
     defaultValues: {
       gift: currentGift.gift,
@@ -20,14 +25,53 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setIsEditing }) => {
     },
   });
   const onSubmit = (data) => {
-    const updatedGift = {
-      id: currentGift.id,
-      ...data,
-    };
-    setGifts(
-      gifts.map((gift) => (gift.id === updatedGift.id ? updatedGift : gift))
-    );
-    setIsEditing((prevValue) => !prevValue);
+    setGifts([
+      ...gifts,
+      {
+        id: uuidv4(),
+        ...data,
+      },
+    ]);
+    setShowDuplicate((prevValue) => !prevValue);
+  };
+
+  const randomGifts = [
+    "Luxury watch",
+    "Gourmet chocolates",
+    "Customized phone case",
+    "Cozy throw blanket",
+    "Elegant jewelry box",
+    "Artisanal coffee beans",
+    "Designer handbag",
+    "Premium quality pens",
+    "Luxurious scented candles",
+    "High-end skincare products",
+    "Gourmet cooking sauces",
+    "Personalized cutting board",
+    "Handmade pottery mug",
+    "Quality leather wallet",
+    "Luxurious silk pillowcase",
+    "Gourmet snack basket",
+    "Premium quality wine",
+    "Handmade soap set",
+    "Exotic spice blend",
+    "Luxurious bathrobe",
+    "Quality kitchen knife set",
+    "Personalized stationary set",
+    "Handmade quilt or afghan",
+    "Luxurious candle set",
+    "Premium quality teas",
+    "Gourmet popcorn set",
+    "Handmade pottery vase",
+    "Quality essential oil diffuser",
+    "Personalized photo album",
+    "Handmade candle holders",
+  ];
+
+  const getRandomGift = () => {
+    const randomGift =
+      randomGifts[Math.floor(Math.random() * randomGifts.length)];
+    return randomGift;
   };
 
   const isImage = (url) => {
@@ -39,25 +83,34 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setIsEditing }) => {
       className="absolute w-[min(90%,500px)] bg-black/60 z-40 rounded-lg border border-amber-900 p-4 flex flex-col items-center justify-center gap-3"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h3>Edit Gift</h3>
-      <div className="flex flex-col gap-3 w-11/12">
-        <label htmlFor="gift">Gift:</label>
-        <input
-          type="text"
-          name="gift"
-          {...register("gift", {
-            required: {
-              value: true,
-              message: "Empty gift are not valid.",
-            },
-            maxLength: {
-              value: 30,
-              message: "The gift is too long",
-            },
-          })}
-          className="text-black p-2 rounded-lg w-full"
-        />
-        {errors.gift && <p className="text-red-600">{errors.gift.message}</p>}
+      <h3>Add Gift</h3>
+      <div className="flex gap-3 w-11/12">
+        <div className="flex flex-col gap-3 w-full">
+          <label htmlFor="gift">Gift:</label>
+          <input
+            type="text"
+            name="gift"
+            {...register("gift", {
+              required: {
+                value: true,
+                message: "Empty gift are not valid.",
+              },
+              maxLength: {
+                value: 30,
+                message: "The gift is too long",
+              },
+            })}
+            className="text-black p-2 rounded-lg w-full"
+          />
+          {errors.gift && <p className="text-red-600">{errors.gift.message}</p>}
+        </div>
+        <button
+          onClick={() => setValue("gift", getRandomGift())}
+          type="button"
+          className="border border-amber-700 rounded-lg "
+        >
+          Random Gift
+        </button>
       </div>
       <div className="flex flex-col gap-3 w-11/12">
         <label htmlFor="for">For:</label>
@@ -139,14 +192,13 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setIsEditing }) => {
       <div className="flex items-center justify-between w-full">
         <button
           type="button"
-          onClick={() => setIsEditing((prevValue) => !prevValue)}
+          onClick={() => setShowDuplicate((prevValue) => !prevValue)}
         >
           Close
         </button>
-        <button type="submit">Update</button>
+        <button type="submit">Add</button>
       </div>
     </form>
   );
 };
-
-export default EditGiftForm;
+export default DuplicateGiftForm;

@@ -1,46 +1,81 @@
 "use client";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
+import { BsDice5 } from "react-icons/bs";
 
 const GiftForm = ({ gifts, setGifts, setShowGiftForm }) => {
-  const [giftInput, setGiftInput] = useState("");
-  const [amountInput, setAmountInput] = useState(1);
-  const [imageInput, setImageInput] = useState("");
-  const [recipientInput, setRecipientInput] = useState("");
-  const [errorMsg, setErrorMsg] = useState(null);
-
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    if (giftInput.length >= 25) {
-      return setErrorMsg("The gift is too long.");
-    } else if (!giftInput) {
-      return setErrorMsg("Empty gift are invalid.");
-    } else if (
-      gifts.some((e) => e.text.toLowerCase() === giftInput.toLowerCase())
-    ) {
-      return setErrorMsg("This gift already exists.");
-    } else if (!isImage(imageInput)) {
-      return setErrorMsg("Please add a valid image url.");
-    } else if (!recipientInput) {
-      return setErrorMsg("The recipient must not be empty");
-    } else {
-      setGiftInput("");
-      setAmountInput(1);
-      setErrorMsg(null);
-      setImageInput("");
-      setRecipientInput("");
-      setShowGiftForm((prevValue) => !prevValue);
-      setGifts([
-        ...gifts,
-        {
-          id: uuidv4(),
-          text: giftInput,
-          amount: amountInput,
-          url: imageInput,
-          recipient: recipientInput,
-        },
-      ]);
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+    setValue,
+    getValues,
+    setError,
+  } = useForm({
+    defaultValues: {
+      gift: "",
+      for: "",
+      amount: 1,
+      price: 1,
+      imageUrl: "",
+    },
+  });
+  const onSubmit = (data) => {
+    if (gifts.some((item) => item.gift === getValues("gift"))) {
+      return setError(
+        "gift",
+        { type: "focus", message: "That gift already exists." },
+        { shouldFocus: true }
+      );
     }
+    setGifts([
+      ...gifts,
+      {
+        id: uuidv4(),
+        ...data,
+      },
+    ]);
+    setShowGiftForm((prevValue) => !prevValue);
+  };
+
+  const randomGifts = [
+    "Luxury watch",
+    "Gourmet chocolates",
+    "Customized phone case",
+    "Cozy throw blanket",
+    "Elegant jewelry box",
+    "Artisanal coffee beans",
+    "Designer handbag",
+    "Premium quality pens",
+    "Luxurious scented candles",
+    "High-end skincare products",
+    "Gourmet cooking sauces",
+    "Personalized cutting board",
+    "Handmade pottery mug",
+    "Quality leather wallet",
+    "Luxurious silk pillowcase",
+    "Gourmet snack basket",
+    "Premium quality wine",
+    "Handmade soap set",
+    "Exotic spice blend",
+    "Luxurious bathrobe",
+    "Quality kitchen knife set",
+    "Personalized stationary set",
+    "Handmade quilt or afghan",
+    "Luxurious candle set",
+    "Premium quality teas",
+    "Gourmet popcorn set",
+    "Handmade pottery vase",
+    "Quality essential oil diffuser",
+    "Personalized photo album",
+    "Handmade candle holders",
+  ];
+
+  const getRandomGift = () => {
+    const randomGift =
+      randomGifts[Math.floor(Math.random() * randomGifts.length)];
+    return randomGift;
   };
 
   const isImage = (url) => {
@@ -49,74 +84,123 @@ const GiftForm = ({ gifts, setGifts, setShowGiftForm }) => {
 
   return (
     <form
-      className="absolute w-[min(90%,600px)] flex flex-col items-center justify-center gap-2 text-black bg-black/60 p-3 rounded-lg z-50 border border-violet-200"
-      onSubmit={handleOnSubmit}
+      className="absolute w-[min(90%,500px)] bg-black/60 z-40 rounded-lg border border-amber-900 p-4 flex flex-col items-center justify-center gap-3"
+      onSubmit={handleSubmit(onSubmit)}
     >
-      <h2 className="text-white">Add new Gift</h2>
-      <div className="flex flex-col w-full">
-        <label htmlFor="gift" className="text-white">
-          Gift:
-        </label>
+      <h3>Add Gift</h3>
+      <div className="flex gap-3 w-11/12">
+        <div className="flex flex-col gap-3 w-full">
+          <label htmlFor="gift">Gift:</label>
+          <input
+            type="text"
+            name="gift"
+            {...register("gift", {
+              required: {
+                value: true,
+                message: "Empty gift are not valid.",
+              },
+              maxLength: {
+                value: 30,
+                message: "The gift is too long",
+              },
+            })}
+            className="text-black p-2 rounded-lg w-full"
+          />
+          {errors.gift && <p className="text-red-600">{errors.gift.message}</p>}
+        </div>
+        <button
+          onClick={() => setValue("gift", getRandomGift())}
+          type="button"
+          className="border border-amber-700 rounded-lg "
+        >
+          Random Gift
+        </button>
+      </div>
+      <div className="flex flex-col gap-3 w-11/12">
+        <label htmlFor="for">For:</label>
         <input
           type="text"
-          value={giftInput}
-          onChange={(e) => setGiftInput(e.target.value)}
-          name="gift"
-          className="rounded-lg p-2 w-full outline-none focus:outline-2 focus:outline-purple-200"
+          name="for"
+          {...register("for", {
+            required: {
+              value: true,
+              message: "Empty recipient are not valid.",
+            },
+            maxLength: {
+              value: 25,
+              message: "The gift recipient is too long",
+            },
+          })}
+          className="text-black p-2 rounded-lg w-full"
         />
+        {errors.for && <p className="text-red-600">{errors.for.message}</p>}
       </div>
-      <div className="flex flex-col w-full">
-        <label htmlFor="amount" className="text-white">
-          Amount:
-        </label>
+      <div className="flex flex-col gap-3 w-11/12">
+        <label htmlFor="amount">Amount:</label>
         <input
           type="number"
           name="amount"
-          value={amountInput}
-          onChange={(e) => setAmountInput(e.target.value)}
-          className="rounded-lg p-2 w-full outline-none focus:outline-2 focus:outline-purple-200"
+          min="1"
+          max="20"
+          {...register("amount", {
+            required: true,
+            min: {
+              value: 1,
+              message: "The amount must be greater than 0.",
+            },
+            max: {
+              value: 20,
+              message: "The amount must be less than 20.",
+            },
+          })}
+          className="text-black p-2 rounded-lg w-full"
         />
+        {errors.amount && (
+          <p className="text-red-600">{errors.amount.message}</p>
+        )}
       </div>
-      <div className="flex flex-col w-full">
-        <label htmlFor="image" className="text-white">
-          Image:
-        </label>
+      <div className="flex flex-col gap-3 w-11/12">
+        <label htmlFor="amount">Price:</label>
+        <input
+          type="number"
+          name="price"
+          {...register("price", {
+            required: true,
+            min: {
+              value: 1,
+              message: "The price must be greater than 0.",
+            },
+            max: {
+              value: 200000,
+              message: "The price must be less than 200000.",
+            },
+          })}
+          className="text-black p-2 rounded-lg w-full"
+        />
+        {errors.price && <p className="text-red-600">{errors.price.message}</p>}
+      </div>
+      <div className="flex flex-col gap-3 w-11/12">
+        <label htmlFor="image">Image Url:</label>
         <input
           type="text"
           name="image"
-          value={imageInput}
-          onChange={(e) => setImageInput(e.target.value)}
-          placeholder="htpps://example.com/image.jpg"
-          className="rounded-lg p-2 w-full outline-none focus:outline-2 focus:outline-purple-200"
+          {...register("imageUrl", {
+            validate: (value) => isImage(value),
+          })}
+          className="text-black p-2 rounded-lg w-full"
         />
+        {errors.imageUrl && (
+          <p className="text-red-600">Add a valid Image Url.</p>
+        )}
       </div>
-      <div className="flex flex-col w-full">
-        <label htmlFor="recipient" className="text-white">
-          Recipient:
-        </label>
-        <input
-          type="text"
-          value={recipientInput}
-          name="recipient"
-          onChange={(e) => setRecipientInput(e.target.value)}
-          className="rounded-lg p-2 w-full outline-none focus:outline-2 focus:outline-purple-200"
-        />
-      </div>
-      {errorMsg && <p className="text-red-400">{errorMsg}</p>}
-      <div className="w-full flex items-center justify-between">
+      <div className="flex items-center justify-between w-full">
         <button
           type="button"
-          className=" bg-purple-200 rounded-lg font-mono p-1"
           onClick={() => setShowGiftForm((prevValue) => !prevValue)}
         >
           Close
         </button>
-        <button
-          type="submit"
-          className=" bg-purple-200 rounded-lg font-mono p-1"
-        >
-          Add
-        </button>
+        <button type="submit">Add</button>
       </div>
     </form>
   );
