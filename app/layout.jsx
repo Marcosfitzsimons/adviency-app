@@ -4,11 +4,13 @@ import "./globals.css";
 
 const openSans = Open_Sans({
   variable: "--open-sans",
+  subsets: ["latin"],
   weight: ["300", "400", "500", "700"],
 });
 
 const greatVibes = Great_Vibes({
   variable: "--great-vibes",
+  subsets: ["latin"],
   weight: "400",
 });
 
