@@ -2,7 +2,7 @@
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
-import decoration from "../../public/assets/decoration.svg";
+import FormButton from "./FormButton";
 
 const GiftForm = ({ gifts, setGifts, setShowGift }) => {
   const {
@@ -16,8 +16,8 @@ const GiftForm = ({ gifts, setGifts, setShowGift }) => {
   } = useForm({
     defaultValues: {
       giftText: "",
-      for: "",
-      amount: 1,
+      to: "",
+      quantity: 1,
       price: 1,
       imageUrl: "",
     },
@@ -119,17 +119,17 @@ const GiftForm = ({ gifts, setGifts, setShowGift }) => {
         <button
           onClick={getRandomGift}
           type="button"
-          className="p-1 flex flex-col text-sm items-center justify-center self-end border border-amber-800 text-amber-900 bg-[#fff9f1] gap-2 rounded-md hover:border-amber-700"
+          className="p-1 flex flex-col text-sm items-center justify-center self-end border border-amber-900 text-amber-900 bg-[#fff9f1] gap-2 rounded-md hover:border-amber-600"
         >
           Random Gift
         </button>
       </div>
       <div className="w-10/12 lg:w-9/12">
-        <label htmlFor="for">For:</label>
+        <label htmlFor="to">To:</label>
         <input
           type="text"
-          name="for"
-          {...register("for", {
+          name="to"
+          {...register("to", {
             required: {
               value: true,
               message: "Add a recipient.",
@@ -141,31 +141,31 @@ const GiftForm = ({ gifts, setGifts, setShowGift }) => {
           })}
           className="text-black w-full rounded-md p-2"
         />
-        {errors.for && <p className="text-red-600">{errors.for.message}</p>}
+        {errors.to && <p className="text-red-600">{errors.to.message}</p>}
       </div>
       <div className="w-10/12 lg:w-9/12">
-        <label htmlFor="amount">Amount:</label>
+        <label htmlFor="quantity">Quantity:</label>
         <input
           type="number"
-          name="amount"
-          {...register("amount", {
+          name="quantity"
+          {...register("quantity", {
             required: {
               value: true,
-              message: "Add an amount.",
+              message: "Quantity shouldn't be empty.",
             },
             min: {
               value: 1,
-              message: "The amount must be greater than 1.",
+              message: "Quantity must be greater than 1.",
             },
             max: {
               value: 25,
-              message: "The amount must be less than 25.",
+              message: "Quantity must be less than 25.",
             },
           })}
           className="text-black w-full rounded-md p-2"
         />
-        {errors.amount && (
-          <p className="text-red-600">{errors.amount.message}</p>
+        {errors.quantity && (
+          <p className="text-red-600">{errors.quantity.message}</p>
         )}
       </div>
       <div className="w-10/12 lg:w-9/12">
@@ -206,7 +206,7 @@ const GiftForm = ({ gifts, setGifts, setShowGift }) => {
         )}
       </div>
 
-      <div className="flex items-center justify-between w-full px-3">
+      <div className="flex items-center justify-between w-full pt-3 px-3">
         <button
           type="button"
           onClick={() => setShowGift((prevV) => !prevV)}
@@ -214,19 +214,7 @@ const GiftForm = ({ gifts, setGifts, setShowGift }) => {
         >
           Close
         </button>
-        <Image
-          src={decoration}
-          alt="decoration"
-          width="90"
-          height="90"
-          className=""
-        />
-        <button
-          type="submit"
-          className="rounded-md p-2 border border-amber-900 bg-[#fffbef] min-w-[90px] hover:border-amber-700"
-        >
-          Add
-        </button>
+        <FormButton>Add</FormButton>
       </div>
     </form>
   );

@@ -1,5 +1,7 @@
 "use client";
 import { useForm } from "react-hook-form";
+import Image from "next/image";
+import FormButton from "./FormButton";
 
 const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
   const {
@@ -13,8 +15,8 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
   } = useForm({
     defaultValues: {
       giftText: currentGift.giftText,
-      for: currentGift.for,
-      amount: currentGift.amount,
+      to: currentGift.to,
+      quantity: currentGift.quantity,
       price: currentGift.price,
       imageUrl: currentGift.imageUrl,
     },
@@ -64,11 +66,11 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
         )}
       </div>
       <div className="w-10/12 lg:w-9/12">
-        <label htmlFor="for">For:</label>
+        <label htmlFor="to">To:</label>
         <input
           type="text"
-          name="for"
-          {...register("for", {
+          name="to"
+          {...register("to", {
             required: {
               value: true,
               message: "Add a recipient.",
@@ -80,31 +82,31 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
           })}
           className="text-black w-full rounded-md p-2"
         />
-        {errors.for && <p className="text-red-600">{errors.for.message}</p>}
+        {errors.to && <p className="text-red-600">{errors.to.message}</p>}
       </div>
       <div className="w-10/12 lg:w-9/12">
-        <label htmlFor="amount">Amount:</label>
+        <label htmlFor="quantity">Quantity:</label>
         <input
           type="number"
-          name="amount"
-          {...register("amount", {
+          name="quantity"
+          {...register("quantity", {
             required: {
               value: true,
-              message: "Add an amount.",
+              message: "Quantity shouldn't be empty.",
             },
             min: {
               value: 1,
-              message: "The amount must be greater than 1.",
+              message: "Quantity must be greater than 1.",
             },
             max: {
               value: 25,
-              message: "The amount must be less than 25.",
+              message: "Quantity must be less than 25.",
             },
           })}
           className="text-black w-full rounded-md p-2"
         />
-        {errors.amount && (
-          <p className="text-red-600">{errors.amount.message}</p>
+        {errors.quantity && (
+          <p className="text-red-600">{errors.quantity.message}</p>
         )}
       </div>
       <div className="w-10/12 lg:w-9/12">
@@ -153,12 +155,7 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
         >
           Close
         </button>
-        <button
-          type="submit"
-          className="rounded-md p-2 border border-amber-900 bg-[#fffbef] min-w-[90px] hover:border-amber-700"
-        >
-          Update
-        </button>
+        <FormButton>Update</FormButton>
       </div>
     </form>
   );

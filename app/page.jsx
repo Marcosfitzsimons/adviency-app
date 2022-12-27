@@ -36,7 +36,7 @@ export default function Home() {
   const getTotalAccount = () => {
     let total = 0;
     for (let i = 0; i < gifts.length; i++) {
-      total += gifts[i].price * gifts[i].amount;
+      total += gifts[i].price * gifts[i].quantity;
     }
     setTotalAccount(total);
   };
@@ -89,17 +89,6 @@ export default function Home() {
           List of Gifts
         </h1>
         <MainButton setShowGift={setShowGift} />
-        {gifts.length > 0 && (
-          <div className="relative w-full flex items-center justify-end lg:w-11/12 lg:px-5">
-            <button
-              type="button"
-              onClick={() => setShowPreview((prevV) => !prevV)}
-              className="bg-[#fffbef] rounded-md p-2 border border-amber-900 font-medium hover:border-amber-600"
-            >
-              List Preview
-            </button>
-          </div>
-        )}
         <ul className="relative w-full flex flex-col items-center gap-5 p-6 lg:w-11/12">
           {gifts.length > 0 ? (
             gifts.map((gift) => (
@@ -123,8 +112,16 @@ export default function Home() {
 
         {gifts.length > 0 && (
           <>
-            <div className="w-full flex items-center justify-center">
-              <p className="p-3 min-w-[200px] text-center rounded-md bg-[#fffbef]">
+            <div className="w-full flex items-center justify-between">
+              <button
+                type="button"
+                onClick={() => setShowPreview((prevV) => !prevV)}
+                className="bg-[#fffbef] rounded-md py-1 px-3 border border-amber-900 hover:border-amber-600"
+              >
+                List Preview
+              </button>
+
+              <p className="min-w-[200px] text-center lg:border-l lg:border-l-amber-900 py-1">
                 Total account: $ {totalAccount}
               </p>
             </div>

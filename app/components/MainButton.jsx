@@ -17,14 +17,14 @@ const MainButton = ({ setShowGift }) => {
       layout
       onHoverStart={() => setIsAnimated((prevV) => !prevV)}
       onHoverEnd={() => setIsAnimated((prevV) => !prevV)}
-      className={`pl-3 border font-open-sans min-w-[160px] w-full max-w-[250px] font-medium rounded-md text-lg border-amber-900 text-amber-900 bg-[#fffbef] flex items-center gap-2 justify-center`}
+      className="pl-3 border font-open-sans min-w-[160px] w-full font-medium rounded-md text-lg border-amber-900 text-amber-900 bg-[#fffbef] flex items-center gap-2 justify-center md:max-w-[250px]"
     >
       Add Gift
       <Image
         src={present}
         alt="present"
-        width="45"
-        height="45"
+        width="40"
+        height="40"
         className={`relative right-1 transition ease ${
           isAnimated ? "rotate-6" : "rotate-0"
         }`}

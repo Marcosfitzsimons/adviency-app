@@ -43,10 +43,10 @@ const Gift = ({
         </div>
         <div className="flex flex-col gap-1">
           <p>
-            <span className="">{gift.giftText}</span> ({gift.amount}) - ${" "}
-            {gift.price * gift.amount}
+            <span className="">{gift.giftText}</span> ({gift.quantity}) - ${" "}
+            {gift.price * gift.quantity}
           </p>
-          <p className="text-amber-700">{gift.for}</p>
+          <p className="text-amber-700">{gift.to}</p>
         </div>
       </div>
       <div className="flex items-center gap-3 pt-2">
