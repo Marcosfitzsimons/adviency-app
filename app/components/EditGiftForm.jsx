@@ -49,7 +49,7 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
         <input
           type="text"
           name="gift"
-          className="text-black w-full rounded-md p-2"
+          className="text-black w-full rounded-md p-2  outline-none focus:outline-2 focus:outline-amber-900"
           {...register("giftText", {
             required: {
               value: true,
@@ -80,7 +80,7 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
               message: "The recipient is too long.",
             },
           })}
-          className="text-black w-full rounded-md p-2"
+          className="text-black w-full rounded-md p-2  outline-none focus:outline-2 focus:outline-amber-900"
         />
         {errors.to && <p className="text-red-600">{errors.to.message}</p>}
       </div>
@@ -103,7 +103,7 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
               message: "Quantity must be less than 25.",
             },
           })}
-          className="text-black w-full rounded-md p-2"
+          className="text-black w-full rounded-md p-2  outline-none focus:outline-2 focus:outline-amber-900"
         />
         {errors.quantity && (
           <p className="text-red-600">{errors.quantity.message}</p>
@@ -128,7 +128,7 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
               message: "The price must be less than 1000000.",
             },
           })}
-          className="text-black w-full rounded-md p-2"
+          className="text-black w-full rounded-md p-2  outline-none focus:outline-2 focus:outline-amber-900"
         />
         {errors.price && <p className="text-red-600">{errors.price.message}</p>}
       </div>
@@ -140,7 +140,7 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
           {...register("imageUrl", {
             validate: (val) => isImage(val) || "Add a valid Image Url.",
           })}
-          className="text-black w-full rounded-md p-2"
+          className="text-black w-full rounded-md p-2  outline-none focus:outline-2 focus:outline-amber-900"
         />
         {errors.imageUrl && (
           <p className="text-red-600">{errors.imageUrl.message}</p>
@@ -151,7 +151,7 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
         <button
           type="button"
           onClick={() => setShowEdit((prevV) => !prevV)}
-          className="rounded-md text-red-600 p-2 min-w-[90px]"
+          className="rounded-md text-red-600 p-2 min-w-[90px] outline-none focus:outline-2 focus:outline-amber-900"
         >
           Close
         </button>

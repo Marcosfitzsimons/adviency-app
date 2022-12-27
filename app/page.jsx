@@ -116,7 +116,7 @@ export default function Home() {
               <button
                 type="button"
                 onClick={() => setShowPreview((prevV) => !prevV)}
-                className="bg-[#fffbef] rounded-md py-1 px-3 border border-amber-900 hover:border-amber-600"
+                className="bg-[#fffbef] rounded-md py-1 px-3 border border-amber-900 outline-none  hover:border-amber-600 focus:outline-2 focus:outline-amber-900"
               >
                 List Preview
               </button>
@@ -127,7 +127,7 @@ export default function Home() {
             </div>
             <button
               onClick={() => setGifts([])}
-              className="font-medium text-red-600"
+              className="font-medium text-red-600 outline-none rounded-md focus:outline-2 focus:outline-red-600"
             >
               Delete All
             </button>
