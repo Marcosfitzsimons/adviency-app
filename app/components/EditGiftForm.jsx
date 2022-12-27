@@ -151,7 +151,7 @@ const EditGiftForm = ({ gifts, setGifts, currentGift, setShowEdit }) => {
         <button
           type="button"
           onClick={() => setShowEdit((prevV) => !prevV)}
-          className="rounded-md text-red-600 p-2 min-w-[90px] outline-none focus:outline-2 focus:outline-amber-900"
+          className="rounded-md text-red-600 p-2 min-w-[90px] outline-none"
         >
           Close
         </button>

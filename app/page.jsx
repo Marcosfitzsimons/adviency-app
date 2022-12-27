@@ -127,7 +127,7 @@ export default function Home() {
             </div>
             <button
               onClick={() => setGifts([])}
-              className="font-medium text-red-600 outline-none rounded-md focus:outline-2 focus:outline-red-600"
+              className="font-medium text-red-600 outline-none"
             >
               Delete All
             </button>
