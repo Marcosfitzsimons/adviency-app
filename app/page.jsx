@@ -89,19 +89,17 @@ export default function Home() {
           List of Gifts
         </h1>
         <MainButton setShowGift={setShowGift} />
-        <div className="relative w-full flex items-center justify-end lg:w-11/12 lg:px-5">
-          <button
-            type="button"
-            onClick={() => setShowPreview((prevV) => !prevV)}
-            className={`${
-              gifts.length > 0
-                ? "opacity-1"
-                : "opacity-60 cursor-not-allowed hover:border-amber-900"
-            } bg-[#fffbef] rounded-md p-2 border border-amber-900 font-medium hover:border-amber-600`}
-          >
-            List Preview
-          </button>
-        </div>
+        {gifts.length > 0 && (
+          <div className="relative w-full flex items-center justify-end lg:w-11/12 lg:px-5">
+            <button
+              type="button"
+              onClick={() => setShowPreview((prevV) => !prevV)}
+              className="bg-[#fffbef] rounded-md p-2 border border-amber-900 font-medium hover:border-amber-600"
+            >
+              List Preview
+            </button>
+          </div>
+        )}
         <ul className="relative w-full flex flex-col items-center gap-5 p-6 lg:w-11/12">
           {gifts.length > 0 ? (
             gifts.map((gift) => (
