@@ -1,20 +1,21 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
-import { BsDice5 } from "react-icons/bs";
+import Image from "next/image";
+import decoration from "../../public/assets/decoration.svg";
 
-const GiftForm = ({ gifts, setGifts, setShowGiftForm }) => {
+const GiftForm = ({ gifts, setGifts, setShowGift }) => {
   const {
     register,
     handleSubmit,
     watch,
-    formState: { errors },
     setValue,
     getValues,
     setError,
+    formState: { errors },
   } = useForm({
     defaultValues: {
-      gift: "",
+      giftText: "",
       for: "",
       amount: 1,
       price: 1,
@@ -22,13 +23,19 @@ const GiftForm = ({ gifts, setGifts, setShowGiftForm }) => {
     },
   });
   const onSubmit = (data) => {
-    if (gifts.some((item) => item.gift === getValues("gift"))) {
+    if (
+      gifts.some(
+        (gift) =>
+          gift.giftText.toLowerCase() === getValues("giftText").toLowerCase()
+      )
+    ) {
       return setError(
-        "gift",
+        "giftText",
         { type: "focus", message: "That gift already exists." },
         { shouldFocus: true }
       );
     }
+    setShowGift((prevV) => !prevV);
     setGifts([
       ...gifts,
       {
@@ -36,7 +43,12 @@ const GiftForm = ({ gifts, setGifts, setShowGiftForm }) => {
         ...data,
       },
     ]);
-    setShowGiftForm((prevValue) => !prevValue);
+  };
+
+  const getRandomGift = () => {
+    let randomGift =
+      randomGifts[Math.floor(Math.random() * randomGifts.length)];
+    setValue("giftText", randomGift, { shouldValidate: true });
   };
 
   const randomGifts = [
@@ -72,51 +84,47 @@ const GiftForm = ({ gifts, setGifts, setShowGiftForm }) => {
     "Handmade candle holders",
   ];
 
-  const getRandomGift = () => {
-    const randomGift =
-      randomGifts[Math.floor(Math.random() * randomGifts.length)];
-    return randomGift;
-  };
-
   const isImage = (url) => {
     return /\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url);
   };
 
   return (
     <form
-      className="absolute w-[min(90%,500px)] bg-black/60 z-40 rounded-lg border border-amber-900 p-4 flex flex-col items-center justify-center gap-3"
+      className="bg-[#faf0e4] absolute w-[min(95%,700px)] p-3 py-5 gap-2 top-32 z-50 rounded-md flex flex-col items-center border border-white"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h3>Add Gift</h3>
-      <div className="flex gap-3 w-11/12">
-        <div className="flex flex-col gap-3 w-full">
+      <h3 className="text-6xl text-red-600 pb-2 font-great-vibes">Add Gift</h3>
+      <div className="w-10/12 lg:w-9/12 flex items-center gap-1">
+        <div className="w-full">
           <label htmlFor="gift">Gift:</label>
           <input
             type="text"
             name="gift"
-            {...register("gift", {
+            className="text-black w-full rounded-md p-2"
+            {...register("giftText", {
               required: {
                 value: true,
-                message: "Empty gift are not valid.",
+                message: "Empty gifts are not valid.",
               },
               maxLength: {
-                value: 30,
-                message: "The gift is too long",
+                value: 25,
+                message: "The gift is too long.",
               },
             })}
-            className="text-black p-2 rounded-lg w-full"
           />
-          {errors.gift && <p className="text-red-600">{errors.gift.message}</p>}
+          {errors.giftText && (
+            <p className="text-red-600">{errors.giftText.message}</p>
+          )}
         </div>
         <button
-          onClick={() => setValue("gift", getRandomGift())}
+          onClick={getRandomGift}
           type="button"
-          className="border border-amber-700 rounded-lg "
+          className="p-1 flex flex-col text-sm items-center justify-center self-end border border-amber-800 text-amber-900 bg-[#fff9f1] gap-2 rounded-md hover:border-amber-700"
         >
           Random Gift
         </button>
       </div>
-      <div className="flex flex-col gap-3 w-11/12">
+      <div className="w-10/12 lg:w-9/12">
         <label htmlFor="for">For:</label>
         <input
           type="text"
@@ -124,83 +132,101 @@ const GiftForm = ({ gifts, setGifts, setShowGiftForm }) => {
           {...register("for", {
             required: {
               value: true,
-              message: "Empty recipient are not valid.",
+              message: "Add a recipient.",
             },
             maxLength: {
               value: 25,
-              message: "The gift recipient is too long",
+              message: "The recipient is too long.",
             },
           })}
-          className="text-black p-2 rounded-lg w-full"
+          className="text-black w-full rounded-md p-2"
         />
         {errors.for && <p className="text-red-600">{errors.for.message}</p>}
       </div>
-      <div className="flex flex-col gap-3 w-11/12">
+      <div className="w-10/12 lg:w-9/12">
         <label htmlFor="amount">Amount:</label>
         <input
           type="number"
           name="amount"
-          min="1"
-          max="20"
           {...register("amount", {
-            required: true,
+            required: {
+              value: true,
+              message: "Add an amount.",
+            },
             min: {
               value: 1,
-              message: "The amount must be greater than 0.",
+              message: "The amount must be greater than 1.",
             },
             max: {
-              value: 20,
-              message: "The amount must be less than 20.",
+              value: 25,
+              message: "The amount must be less than 25.",
             },
           })}
-          className="text-black p-2 rounded-lg w-full"
+          className="text-black w-full rounded-md p-2"
         />
         {errors.amount && (
           <p className="text-red-600">{errors.amount.message}</p>
         )}
       </div>
-      <div className="flex flex-col gap-3 w-11/12">
-        <label htmlFor="amount">Price:</label>
+      <div className="w-10/12 lg:w-9/12">
+        <label htmlFor="price">Price:</label>
         <input
           type="number"
           name="price"
           {...register("price", {
-            required: true,
+            required: {
+              value: true,
+              message: "Add a price.",
+            },
             min: {
               value: 1,
-              message: "The price must be greater than 0.",
+              message: "The price must be greater than 1.",
             },
             max: {
-              value: 200000,
-              message: "The price must be less than 200000.",
+              value: 1000000,
+              message: "The price must be less than 1000000.",
             },
           })}
-          className="text-black p-2 rounded-lg w-full"
+          className="text-black w-full rounded-md p-2"
         />
         {errors.price && <p className="text-red-600">{errors.price.message}</p>}
       </div>
-      <div className="flex flex-col gap-3 w-11/12">
-        <label htmlFor="image">Image Url:</label>
+      <div className="w-10/12 lg:w-9/12">
+        <label htmlFor="image-url">Image:</label>
         <input
           type="text"
-          name="image"
+          name="image-url"
           {...register("imageUrl", {
-            validate: (value) => isImage(value),
+            validate: (val) => isImage(val) || "Add a valid Image Url.",
           })}
-          className="text-black p-2 rounded-lg w-full"
+          className="text-black w-full rounded-md p-2"
         />
         {errors.imageUrl && (
-          <p className="text-red-600">Add a valid Image Url.</p>
+          <p className="text-red-600">{errors.imageUrl.message}</p>
         )}
       </div>
-      <div className="flex items-center justify-between w-full">
+
+      <div className="flex items-center justify-between w-full px-3">
         <button
           type="button"
-          onClick={() => setShowGiftForm((prevValue) => !prevValue)}
+          onClick={() => setShowGift((prevV) => !prevV)}
+          className="rounded-md text-red-600 p-2 min-w-[90px]"
         >
           Close
         </button>
-        <button type="submit">Add</button>
+        <Image
+          src={decoration}
+          alt="decoration"
+          width="90"
+          height="90"
+          className=""
+        />
+        <button
+          type="submit"
+          className="rounded-md p-2 border border-amber-900 bg-[#fffbef] min-w-[90px] hover:border-amber-700"
+        >
+          Add
+        </button>
       </div>
     </form>
   );

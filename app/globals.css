@@ -4,25 +4,27 @@
 
 body {
   background-color: #171b22;
-  height: 100vh;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  color: black;
+  min-height: 100vh;
+  height: 100%;
+  font-weight: 500;
   background-image: url("../public/assets/bg-mobile.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
   position: relative;
+  overflow-x: hidden;
 }
 
 body:before {
+  overflow: hidden;
   content: "";
   display: block;
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.3);
   z-index: -100;
+  heigth: 100%;
 }
 
 [data-nextjs-scroll-focus-boundary] {

@@ -8,8 +8,8 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
+        'open-sans': ['var(--open-sans)'],
         'great-vibes': ['var(--font-great-vibes)'],
-        'lato': ['var(--font-lato)'],
       },
     },
   },
