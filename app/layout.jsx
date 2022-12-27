@@ -8,7 +8,7 @@ const openSans = Open_Sans({
 });
 
 const greatVibes = Great_Vibes({
-  variable: "--font-great-vibes",
+  variable: "--great-vibes",
   weight: "400",
 });
 

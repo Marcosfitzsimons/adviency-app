@@ -9,7 +9,7 @@ module.exports = {
     extend: {
       fontFamily: {
         'open-sans': ['var(--open-sans)'],
-        'great-vibes': ['var(--font-great-vibes)'],
+        'great-vibes': ['var(--great-vibes)'],
       },
     },
   },
