@@ -111,8 +111,11 @@ export default function Home() {
         </ul>
 
         {gifts.length > 0 && (
-          <>
-            <div className="w-full flex items-center justify-between">
+          <div className="flex flex-col gap-3 md:w-full">
+            <div className="w-full flex flex-col items-center gap-3 md:flex-row md:justify-between">
+              <p className="min-w-[200px] text-center md:border-l md:border-l-amber-900 md:order-2">
+                Total account: $ {totalAccount}
+              </p>
               <button
                 type="button"
                 onClick={() => setShowPreview((prevV) => !prevV)}
@@ -120,10 +123,6 @@ export default function Home() {
               >
                 List Preview
               </button>
-
-              <p className="min-w-[200px] text-center lg:border-l lg:border-l-amber-900 py-1">
-                Total account: $ {totalAccount}
-              </p>
             </div>
             <button
               onClick={() => setGifts([])}
@@ -131,7 +130,7 @@ export default function Home() {
             >
               Delete All
             </button>
-          </>
+          </div>
         )}
       </div>
     </main>
