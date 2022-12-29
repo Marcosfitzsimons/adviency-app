@@ -5,7 +5,7 @@ import "./globals.css";
 const openSans = Open_Sans({
   variable: "--open-sans",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "700"],
+  weight: ["500", "700"],
 });
 
 const greatVibes = Great_Vibes({

@@ -7,7 +7,6 @@ import DuplicateGiftForm from "./components/DuplicateGiftForm";
 import Gift from "./components/Gift";
 import GiftForm from "./components/GiftForm";
 import hat from "../public/assets/hat.svg";
-import decoration from "../public/assets/decoration.svg";
 import MainButton from "./components/MainButton";
 import ListPreview from "./components/ListPreview";
 
