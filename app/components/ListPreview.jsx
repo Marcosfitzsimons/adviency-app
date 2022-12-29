@@ -4,7 +4,6 @@ import React, { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import Image from "next/image";
 import bow from "../../public/assets/bow.png";
-import PreviewToPrint from "./PreviewToPrint";
 
 const ListPreview = ({ setShowPreview, gifts }) => {
   const componentRef = useRef();
@@ -40,9 +39,9 @@ const ListPreview = ({ setShowPreview, gifts }) => {
                 </div>
                 <div className="flex flex-col gap-1">
                   <p>
-                    <span className="">{gift.giftText}</span> ({gift.amount})
+                    <span className="">{gift.giftText}</span> ({gift.quantity})
                   </p>
-                  <p className="text-amber-700">{gift.for}</p>
+                  <p className="text-amber-700">{gift.to}</p>
                 </div>
               </div>
             </li>
