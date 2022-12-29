@@ -32,7 +32,7 @@ const PreviewToPrint = ({ gifts }) => {
                 <p>
                   <span className="">{gift.giftText}</span> ({gift.amount})
                 </p>
-                <p className="text-amber-700">{gift.for}</p>
+                <p className="text-amber-700">{gift.to}</p>
               </div>
             </div>
           </li>
