@@ -1,7 +1,6 @@
 "use client";
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
-import Image from "next/image";
 import FormButton from "./FormButton";
 
 const GiftForm = ({ gifts, setGifts, setShowGift }) => {
