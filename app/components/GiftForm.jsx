@@ -1,9 +1,10 @@
 "use client";
+
 import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import FormButton from "./FormButton";
 
-const GiftForm = ({ gifts, setGifts, setShowGift }) => {
+const GiftForm = ({ gifts, setGifts, setShowGift, showGift }) => {
   const {
     register,
     handleSubmit,
@@ -89,7 +90,7 @@ const GiftForm = ({ gifts, setGifts, setShowGift }) => {
 
   return (
     <form
-      className="bg-[#faf0e4] absolute w-[min(95%,700px)] p-3 py-5 gap-2 top-32 z-50 rounded-md flex flex-col items-center border border-white"
+      className="gap-2 z-50 flex flex-col items-center"
       onSubmit={handleSubmit(onSubmit)}
     >
       <h3 className="text-6xl text-red-600 pb-2 font-great-vibes">Add Gift</h3>

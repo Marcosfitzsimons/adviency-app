@@ -12,7 +12,7 @@ const ListPreview = ({ setShowPreview, gifts }) => {
     documentTitle: "list-preview",
   });
   return (
-    <section className="absolute w-[min(95%,700px)] p-3 py-5 top-32 bg-[#faf0e4] z-50 rounded-md border border-white">
+    <section className="">
       <div className="flex flex-col items-center gap-2" ref={componentRef}>
         <h3 className="text-6xl text-red-600 pb-2 font-great-vibes">
           List Preview

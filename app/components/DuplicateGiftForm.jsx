@@ -45,7 +45,7 @@ const DuplicateGiftForm = ({
 
   return (
     <form
-      className="absolute w-[min(95%,700px)] p-3 py-5 gap-2 top-32 bg-[#faf0e4] z-50 rounded-md  flex flex-col items-center border border-white"
+      className="gap-2 flex flex-col items-center"
       onSubmit={handleSubmit(onSubmit)}
     >
       <h3 className="text-6xl text-red-600 pb-2 font-great-vibes">

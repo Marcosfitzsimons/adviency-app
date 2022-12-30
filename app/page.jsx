@@ -59,40 +59,42 @@ export default function Home() {
       ) : (
         ""
       )}
-      {showGift && (
-        <FormWrapper>
-          <GiftForm
-            gifts={gifts}
-            setGifts={setGifts}
-            setShowGift={setShowGift}
-          />
-        </FormWrapper>
-      )}
-      {showEdit && (
-        <FormWrapper>
-          <EditGiftForm
-            gifts={gifts}
-            setGifts={setGifts}
-            setShowEdit={setShowEdit}
-            currentGift={currentGift}
-          />
-        </FormWrapper>
-      )}
-      {showDuplicate && (
-        <FormWrapper>
-          <DuplicateGiftForm
-            gifts={gifts}
-            setGifts={setGifts}
-            setShowDuplicate={setShowDuplicate}
-            currentGift={currentGift}
-          />
-        </FormWrapper>
-      )}
-      {showPreview && (
-        <FormWrapper>
-          <ListPreview gifts={gifts} setShowPreview={setShowPreview} />
-        </FormWrapper>
-      )}
+      <AnimatePresence>
+        {showGift && (
+          <FormWrapper>
+            <GiftForm
+              gifts={gifts}
+              setGifts={setGifts}
+              setShowGift={setShowGift}
+            />
+          </FormWrapper>
+        )}
+        {showEdit && (
+          <FormWrapper>
+            <EditGiftForm
+              gifts={gifts}
+              setGifts={setGifts}
+              setShowEdit={setShowEdit}
+              currentGift={currentGift}
+            />
+          </FormWrapper>
+        )}
+        {showDuplicate && (
+          <FormWrapper>
+            <DuplicateGiftForm
+              gifts={gifts}
+              setGifts={setGifts}
+              setShowDuplicate={setShowDuplicate}
+              currentGift={currentGift}
+            />
+          </FormWrapper>
+        )}
+        {showPreview && (
+          <FormWrapper>
+            <ListPreview gifts={gifts} setShowPreview={setShowPreview} />
+          </FormWrapper>
+        )}
+      </AnimatePresence>
       <div className="relative w-[95%] mx-auto border min-h-[400px] border-[#ece5dc] rounded-lg flex flex-col items-center gap-6 p-6 bg-[#faf0e4] shadow-lg">
         <Script src="https://app.embed.im/snow.js" />
         <div className="hidden drop-shadow-lg rotate-[65deg] absolute right-[-75px] top-[-65px] w-32 aspect-square lg:flex lg:right-[-115px] lg:top-[-100px] lg:w-48">
@@ -118,10 +120,21 @@ export default function Home() {
                 />
               ))
             ) : (
-              <p className="flex flex-col p-3 max-w-[270px] mx-auto rounded-lg text-center col-start-1 col-end-3">
+              <motion.p
+                initial={{
+                  opacity: 0,
+                }}
+                whileInView={{
+                  opacity: 1,
+                  transition: {
+                    duration: 0.5,
+                  },
+                }}
+                className="flex flex-col p-3 max-w-[270px] mx-auto rounded-lg text-center col-start-1 col-end-3"
+              >
                 The list is currently empty.{" "}
                 <span>Try adding some gifts to the list.</span>
-              </p>
+              </motion.p>
             )}
           </AnimatePresence>
         </ul>

@@ -22,7 +22,11 @@ export default function RootLayout({ children }) {
         head.jsx. Find out more at https://beta.nextjs.org/docs/api-reference/file-conventions/head
       */}
       <head />
-      <body className="font-open-sans">{children}</body>
+      <body className="font-open-sans">
+        <main className="mx-auto py-16 w-[min(95%,800px)] h-full flex items-center justify-center lg:py-24 text-amber-900">
+          {children}
+        </main>
+      </body>
     </html>
   );
 }
