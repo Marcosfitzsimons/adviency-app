@@ -14,3 +14,5 @@ The purpose of this app is to practice, learn by repetition and gain a habit by 
 - Array methods like .some() - .find() - .map() - .filter()
 - Work with LocalStorage to store the gift list
 - Framer Motion for animations
+
+#### Thanks to [@goncy](https://twitter.com/goncy) for giving us this challenge.
