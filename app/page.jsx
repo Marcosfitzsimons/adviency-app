@@ -1,14 +1,17 @@
 "use client";
+
 import Script from "next/script";
 import Image from "next/image";
+import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
+import hat from "../public/assets/hat.svg";
 import EditGiftForm from "./components/EditGiftForm";
 import DuplicateGiftForm from "./components/DuplicateGiftForm";
 import Gift from "./components/Gift";
 import GiftForm from "./components/GiftForm";
-import hat from "../public/assets/hat.svg";
 import MainButton from "./components/MainButton";
 import ListPreview from "./components/ListPreview";
+import FormWrapper from "./components/FormWrapper";
 
 export default function Home() {
   const [gifts, setGifts] = useState([]);
@@ -50,38 +53,50 @@ export default function Home() {
   }, [gifts]);
 
   return (
-    <main className="mx-auto py-16 w-[min(95%,800px)] h-full flex items-center justify-center lg:py-24 text-amber-900">
+    <>
       {showEdit || showGift || showDuplicate || showPreview ? (
         <div className="absolute block inset-0 bg-[rgba(0,0,0,.6)] z-30" />
       ) : (
         ""
       )}
       {showGift && (
-        <GiftForm gifts={gifts} setGifts={setGifts} setShowGift={setShowGift} />
+        <FormWrapper>
+          <GiftForm
+            gifts={gifts}
+            setGifts={setGifts}
+            setShowGift={setShowGift}
+          />
+        </FormWrapper>
       )}
       {showEdit && (
-        <EditGiftForm
-          gifts={gifts}
-          setGifts={setGifts}
-          setShowEdit={setShowEdit}
-          currentGift={currentGift}
-        />
+        <FormWrapper>
+          <EditGiftForm
+            gifts={gifts}
+            setGifts={setGifts}
+            setShowEdit={setShowEdit}
+            currentGift={currentGift}
+          />
+        </FormWrapper>
       )}
       {showDuplicate && (
-        <DuplicateGiftForm
-          gifts={gifts}
-          setGifts={setGifts}
-          setShowDuplicate={setShowDuplicate}
-          currentGift={currentGift}
-        />
+        <FormWrapper>
+          <DuplicateGiftForm
+            gifts={gifts}
+            setGifts={setGifts}
+            setShowDuplicate={setShowDuplicate}
+            currentGift={currentGift}
+          />
+        </FormWrapper>
       )}
       {showPreview && (
-        <ListPreview gifts={gifts} setShowPreview={setShowPreview} />
+        <FormWrapper>
+          <ListPreview gifts={gifts} setShowPreview={setShowPreview} />
+        </FormWrapper>
       )}
       <div className="relative w-[95%] mx-auto border min-h-[400px] border-[#ece5dc] rounded-lg flex flex-col items-center gap-6 p-6 bg-[#faf0e4] shadow-lg">
         <Script src="https://app.embed.im/snow.js" />
         <div className="hidden drop-shadow-lg rotate-[65deg] absolute right-[-75px] top-[-65px] w-32 aspect-square lg:flex lg:right-[-115px] lg:top-[-100px] lg:w-48">
-          <Image src={hat} alt="hat" fill className="" />
+          <Image src={hat} alt="hat" fill sizes="20vw" />
         </div>
 
         <h1 className="font-great-vibes text-6xl lg:text-7xl text-red-600">
@@ -89,24 +104,26 @@ export default function Home() {
         </h1>
         <MainButton setShowGift={setShowGift} />
         <ul className="relative w-full flex flex-col items-center gap-5 p-6 lg:w-11/12">
-          {gifts.length > 0 ? (
-            gifts.map((gift) => (
-              <Gift
-                key={gift.id}
-                gift={gift}
-                setGifts={setGifts}
-                gifts={gifts}
-                setCurrentGift={setCurrentGift}
-                setShowDuplicate={setShowDuplicate}
-                setShowEdit={setShowEdit}
-              />
-            ))
-          ) : (
-            <p className="flex flex-col p-3 max-w-[270px] mx-auto rounded-lg text-center col-start-1 col-end-3">
-              The list is currently empty.{" "}
-              <span>Try adding some gifts to the list.</span>
-            </p>
-          )}
+          <AnimatePresence>
+            {gifts.length > 0 ? (
+              gifts.map((gift) => (
+                <Gift
+                  key={gift.id}
+                  gift={gift}
+                  setGifts={setGifts}
+                  gifts={gifts}
+                  setCurrentGift={setCurrentGift}
+                  setShowDuplicate={setShowDuplicate}
+                  setShowEdit={setShowEdit}
+                />
+              ))
+            ) : (
+              <p className="flex flex-col p-3 max-w-[270px] mx-auto rounded-lg text-center col-start-1 col-end-3">
+                The list is currently empty.{" "}
+                <span>Try adding some gifts to the list.</span>
+              </p>
+            )}
+          </AnimatePresence>
         </ul>
 
         {gifts.length > 0 && (
@@ -132,6 +149,6 @@ export default function Home() {
           </div>
         )}
       </div>
-    </main>
+    </>
   );
 }

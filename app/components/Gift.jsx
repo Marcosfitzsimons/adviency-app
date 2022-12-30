@@ -1,4 +1,6 @@
 "use client";
+
+import { motion } from "framer-motion";
 import Image from "next/image";
 import { BiEdit, BiDuplicate } from "react-icons/bi";
 import { BsTrash, BsGift } from "react-icons/bs";
@@ -25,8 +27,39 @@ const Gift = ({
     setCurrentGift(gifts.find((e) => e.id === gift.id));
     setShowDuplicate((prevV) => !prevV);
   };
+
+  const giftVariants = {
+    hidden: {
+      opacity: 0,
+      y: -15,
+    },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "backInOut",
+      },
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.9,
+      y: -15,
+      transition: {
+        duration: 0.6,
+        ease: "backInOut",
+      },
+    },
+  };
+
   return (
-    <li className="relative flex flex-col justify-center items-center gap-3 p-4 px-5 rounded-md bg-[#fffbef] text-amber-900 w-full border border-amber-900 max-w-[300px] shadow-md md:flex-row md:max-w-full md:justify-between">
+    <motion.li
+      variants={giftVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      className="relative flex flex-col justify-center items-center gap-3 p-4 px-5 rounded-md bg-[#fffbef] text-amber-900 w-full border border-amber-900 max-w-[300px] shadow-md md:flex-row md:max-w-full md:justify-between"
+    >
       <Image
         src={bow}
         alt="bow"
@@ -63,7 +96,7 @@ const Gift = ({
           onClick={handleDelete}
         />
       </div>
-    </li>
+    </motion.li>
   );
 };
 
